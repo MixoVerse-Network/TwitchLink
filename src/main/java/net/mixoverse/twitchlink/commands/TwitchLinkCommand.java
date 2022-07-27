@@ -42,7 +42,7 @@ public class TwitchLinkCommand extends Command {
         }
         
         if (args[0].toLowerCase().equals("off")) {
-            switch (chatManager.unsubscribe(player)) {
+            switch (chatManager.unsubscribe(player.getUniqueId())) {
                 case 0:
                     player.sendMessage(new ComponentBuilder(
                             ChatColor.translateAlternateColorCodes('&', config.getString("messages.disabled")))

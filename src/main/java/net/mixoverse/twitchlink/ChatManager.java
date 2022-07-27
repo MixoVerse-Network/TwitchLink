@@ -40,6 +40,11 @@ public class ChatManager {
 
             players.forEach(uuid -> {
                 ProxiedPlayer player = main.getProxy().getPlayer(uuid);
+
+                if (player == null) {
+                    return;
+                }
+
                 player.sendMessage(
                         new ComponentBuilder(
                                 ChatColor.translateAlternateColorCodes('&',
@@ -59,7 +64,7 @@ public class ChatManager {
     public int subscribe(String channel, ProxiedPlayer player) {
 
         if (this.subscriptionsByPlayer.containsKey(player.getUniqueId())) {
-            unsubscribe(player);
+            unsubscribe(player.getUniqueId());
         }
 
         if (this.subscriptions.get(channel) == null) {
@@ -79,8 +84,7 @@ public class ChatManager {
     
     // 0: success
     // 1: not subscribed
-    public int unsubscribe(ProxiedPlayer player) {
-        UUID uuid = player.getUniqueId();
+    public int unsubscribe(UUID uuid) {
         if (this.subscriptionsByPlayer.get(uuid) == null) {
             return 1;
         }
