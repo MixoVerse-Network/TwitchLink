@@ -1,0 +1,9 @@
+api-token: ""
+
+messages:
+  enabled: "&8[&d&lTwitchLink&r&8]&f&a Aktiviert &e-> &b%channel%"
+  disabled: "&8[&d&lTwitchLink&r&8] &cDeaktiviert"
+  not-subscribed: "&8[&d&lTwitchLink&r&8]&c Du bist mit keinem Kanal verbunden"
+  no-permission: "&8[&d&lTwitchLink&r&8]&c Dazu bist du nicht berechtigt"
+  message: "&8[&d&lTwitch&r&8] &e<&6%name%&e> &b-> &f%msg%"
+  usage: "&8[&d&lTwitchLink&r&8] &c/twitchlink kanal/off"

@@ -1,0 +1,5 @@
+
+name: TwitchLink
+main: net.mixoverse.twitchlink.Main
+version: 1.0
+author: Xenorio
