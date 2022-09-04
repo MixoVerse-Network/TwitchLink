@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.geysermc.floodgate.api.FloodgateApi;
+
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -15,6 +17,7 @@ import net.mixoverse.twitchlink.commands.TwitchLinkCommand;
 public class Main extends Plugin {
 
    private Configuration config;
+   private FloodgateApi floodgate;
 
    @Override
    public void onEnable() {
@@ -26,6 +29,13 @@ public class Main extends Plugin {
       } catch (IOException e) {
          // TODO Auto-generated catch block
          e.printStackTrace();
+      }
+
+      try {
+         this.floodgate = FloodgateApi.getInstance();
+         this.getLogger().info("Geyser compatibility enabled");
+      } catch (Exception e) {
+         this.getLogger().info("Could not enable Geyser compatibility. If you use Geyser, please install Floodgate.");
       }
 
       ProxyServer.getInstance().getPluginManager().registerCommand(this, new TwitchLinkCommand(this));
@@ -51,6 +61,10 @@ public class Main extends Plugin {
 
    public Configuration getConfig() {
       return config;
+   }
+
+   public FloodgateApi getFloodgate() {
+      return this.floodgate;
    }
 
 }

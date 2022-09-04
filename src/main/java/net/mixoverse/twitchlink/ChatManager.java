@@ -24,6 +24,7 @@ public class ChatManager {
     private HashMap<UUID, String> subscriptionsByPlayer = new HashMap<>();
 
     public ChatManager(Main main) {
+
         this.config = main.getConfig();
         this.credential = new OAuth2Credential("twitch", config.getString("api-token"));
         this.client = TwitchChatBuilder.builder()
@@ -41,25 +42,26 @@ public class ChatManager {
             players.forEach(uuid -> {
                 ProxiedPlayer player = main.getProxy().getPlayer(uuid);
 
-                if (player == null) {
-                    return;
+                if (player == null && main.getFloodgate() != null) {
+                    player = main.getProxy().getPlayer(main.getFloodgate().getPlayer(uuid).getCorrectUniqueId());
                 }
 
-                player.sendMessage(
-                        new ComponentBuilder(
-                                ChatColor.translateAlternateColorCodes('&',
-                                        config.getString("messages.message")
-                                                .replaceAll("%name%", event.getUser().getName())
-                                                .replaceAll("%msg%", event.getMessage())
-                                )).create());
+                if (player != null) {
+                    player.sendMessage(
+                            new ComponentBuilder(
+                                    ChatColor.translateAlternateColorCodes('&',
+                                            config.getString("messages.message")
+                                                    .replaceAll("%name%", event.getUser().getName())
+                                                    .replaceAll("%msg%", event.getMessage())))
+                                    .create());
+                }
 
-                
             });
 
         });
 
     }
-    
+
     // 0: success
     public int subscribe(String channel, ProxiedPlayer player) {
 
@@ -81,7 +83,7 @@ public class ChatManager {
         return 0;
 
     }
-    
+
     // 0: success
     // 1: not subscribed
     public int unsubscribe(UUID uuid) {
@@ -99,5 +101,5 @@ public class ChatManager {
 
         return 0;
     }
-    
+
 }
